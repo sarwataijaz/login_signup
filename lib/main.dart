@@ -35,45 +35,90 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  bool visibility = false;
+  bool isEnabled = false;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Container(
-          child: Row(
-            children: <Widget>[
-              Container(
-                child: Stack(
-                  children: <Widget>[
-                    SvgPicture.asset(
-                      "assets/images/orange_ellipse.svg",
-                    ),
-                    Positioned(
-                      top: 30,
-                      left: 20,
-                      child: SvgPicture.asset("assets/images/icon.svg"),
-                    ),
-                  Positioned.fill(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 120, left: 30),
-                    child: Text(
-                      'Welcome \n'
-                          'Back',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+        // backgroundColor: Colors.blueGrey,
+        body: Center(
+          child: Container(
+            child: Column(
+              children: [
+                Image.asset("assets/images/img.png", height: 300),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text("LOGIN", style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold
                     ),
                   ),
-                  ],
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: "Email",
+                          contentPadding: EdgeInsets.all(5),
+                          prefixIcon: Icon(Icons.email_outlined, color: Colors.blueAccent),
+                          border: OutlineInputBorder( // Outline border
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                    ),
+                Padding(
+                  padding: const EdgeInsets.only(left:20.0, right: 20.0, bottom: 20.0, top: 2.0),
+                  child: TextField(
+                    obscureText: visibility,
+                    decoration: InputDecoration(
+                      hintText: "Password",
+                      contentPadding: EdgeInsets.all(5),
+                      prefixIcon: Icon(Icons.password_rounded, color: Colors.blueAccent),
+                      suffixIcon: IconButton(
+                        onPressed: () => {
+                          setState(() {
+                            visibility = !visibility;
+                          }
+                          )
+                        },
+                        icon: Icon (
+                          visibility ? Icons.visibility_off : Icons.visibility
+                        )
+                      ),
+                      border: OutlineInputBorder( // Outline border
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                ),
+               Padding(
+                 padding: const EdgeInsets.only(top: 2),
+                 child: TextButton(
+                   onPressed: () => {
+
+                   },
+                   style: TextButton.styleFrom(
+                       textStyle: TextStyle(color: Colors.black)
+                   ),
+                   child: Text("Forgot Password?"),
+                 ),
+               ),
+                OutlinedButton(onPressed: (){
+
+                }, child: Text("LOGIN"),
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: Colors.blueAccent,
+                      textStyle: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
+      )
     );
   }
 }
