@@ -1,6 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+Timer? _debounce;
 
 void main() {
   runApp(const MyApp());
@@ -37,86 +39,195 @@ class _MyHomePageState extends State<MyHomePage> {
 
   bool visibility = false;
   bool isEnabled = false;
+  bool isTapped = false;
+
+  void _toggleButton() {
+    if (_debounce?.isActive ?? false) _debounce!.cancel(); // if multiple tap occuring, cancel the current execution
+    _debounce = Timer(Duration(milliseconds: 200), () {
+      setState(() {
+        isTapped = !isTapped;
+      });
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        // backgroundColor: Colors.blueGrey,
-        body: Center(
+        backgroundColor: Colors.white,
+        resizeToAvoidBottomInset: true, // Set to true to resize when the keyboard is displayed
+        body:SingleChildScrollView(
           child: Container(
-            child: Column(
-              children: [
-                Image.asset("assets/images/img.png", height: 300),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text("LOGIN", style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold
+              child: Column(
+                children: [
+                  Center(child: Image.asset("assets/images/img.png", height: 300)),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text("LOGIN", style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left:20.0, right:20.0, top:2.0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: "Email",
+                              contentPadding: EdgeInsets.all(5),
+                              prefixIcon: Icon(Icons.email_outlined, color: Colors.blueAccent),
+                              border: OutlineInputBorder( // Outline border
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                        ),
+                  ),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left:20.0, right: 20.0, top: 5.0),
                       child: TextField(
+                        obscureText: visibility,
                         decoration: InputDecoration(
-                          hintText: "Email",
+                          hintText: "Password",
                           contentPadding: EdgeInsets.all(5),
-                          prefixIcon: Icon(Icons.email_outlined, color: Colors.blueAccent),
+                          prefixIcon: Icon(Icons.password_rounded, color: Colors.blueAccent),
+                          suffixIcon: IconButton(
+                            onPressed: () => {
+                              setState(() {
+                                visibility = !visibility;
+                              }
+                              )
+                            },
+                            icon: Icon (
+                              visibility ? Icons.visibility_off : Icons.visibility
+                            )
+                          ),
                           border: OutlineInputBorder( // Outline border
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                       ),
                     ),
-                Padding(
-                  padding: const EdgeInsets.only(left:20.0, right: 20.0, bottom: 20.0, top: 2.0),
-                  child: TextField(
-                    obscureText: visibility,
-                    decoration: InputDecoration(
-                      hintText: "Password",
-                      contentPadding: EdgeInsets.all(5),
-                      prefixIcon: Icon(Icons.password_rounded, color: Colors.blueAccent),
-                      suffixIcon: IconButton(
-                        onPressed: () => {
-                          setState(() {
-                            visibility = !visibility;
-                          }
-                          )
-                        },
-                        icon: Icon (
-                          visibility ? Icons.visibility_off : Icons.visibility
-                        )
-                      ),
-                      border: OutlineInputBorder( // Outline border
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
                   ),
-                ),
-               Padding(
-                 padding: const EdgeInsets.only(top: 2),
-                 child: TextButton(
-                   onPressed: () => {
-
-                   },
-                   style: TextButton.styleFrom(
-                       textStyle: TextStyle(color: Colors.black)
-                   ),
-                   child: Text("Forgot Password?"),
+                 Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                   children: [
+                     Row(
+                       children: [
+                         Padding(
+                           padding: const EdgeInsets.only(top: 2.0, left: 25.0),
+                           child: Container(
+                             width: 40,
+                             height: 20,
+                             alignment: Alignment.centerLeft,
+                             decoration: BoxDecoration(
+                               color: (isTapped) ? Colors.blue : Colors.grey,
+                               borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(100), // Adjust the radius for a more cylindrical look
+                              bottom: Radius.circular(100),
+                              ),
+                             ),
+                             child: Stack(
+                               children: [
+                               Positioned(
+                               left: (isTapped) ? null : 0,
+                               right: (isTapped) ? 0 : null,
+                               top: 0,
+                             child: InkWell(
+                               onTap: _toggleButton,
+                               child: Container(
+                                 width: 20,
+                                 height: 20,
+                                 alignment: (isTapped) ? Alignment.topRight: Alignment.topLeft,
+                                 decoration: BoxDecoration(
+                                   shape: BoxShape.circle,
+                                   color: Colors.white,
+                                   border: Border.all(
+                                     color: Colors.white60,
+                                     width: 2,
+                                   )
+                                 ),
+                               ),
+                              ),
+                             ),
+                             ]
+                           ),
+                           ),
+                         ),
+                     Padding(
+                       padding: const EdgeInsets.only(left: 2),
+                       child: Text("Remember me", style: TextStyle(
+                                 fontWeight: FontWeight.bold,
+                                 color: Colors.black
+                               ),
+                           ),
+                     ),
+                       ],
+                     ),
+                     Container(
+                         alignment: Alignment.centerRight,
+                           child: TextButton(
+                             onPressed: () => {
+          
+                             },
+                             style: TextButton.styleFrom(
+                                 foregroundColor: Colors.black, // text color
+                             ),
+                             child: Text("Forgot Password?"),
+                           ),
+                        ),
+                   ],
                  ),
-               ),
-                OutlinedButton(onPressed: (){
-
-                }, child: Text("LOGIN"),
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent,
-                      textStyle: TextStyle(color: Colors.white),
+                  Column(
+                    children: [
+                      OutlinedButton(onPressed: (){
+          
+                      }, child: Text("LOGIN"),
+                        style: OutlinedButton.styleFrom(
+                          backgroundColor: Colors.blueAccent,
+                          foregroundColor: Colors.black, // text color
+                          fixedSize: Size(200, 50),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Text("OR", style: TextStyle(
+                          fontSize: 12
+                        ),),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Text("Log in with", style: TextStyle(
+                            fontSize: 12
+                        ),),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left:8.0, right:8.0),
+                        child: Image.asset("assets/images/logos.png"),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Don't have an account?"),
+                          TextButton(
+                            child: Text("Register now"),
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.blueAccent
+                            ),
+                            onPressed:(){
+          
+                            },
+                          )
+                        ],
+                      )
+                    ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
         ),
       )
     );
