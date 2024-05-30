@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:login_signup/signup.dart';
 Timer? _debounce;
 
 void main() {
@@ -93,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         decoration: InputDecoration(
                           hintText: "Password",
                           contentPadding: EdgeInsets.all(5),
-                          prefixIcon: Icon(Icons.password_rounded, color: Colors.blueAccent),
+                          prefixIcon: Icon(Icons.lock_outline, color: Colors.blueAccent),
                           suffixIcon: IconButton(
                             onPressed: () => {
                               setState(() {
@@ -218,7 +219,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               foregroundColor: Colors.blueAccent
                             ),
                             onPressed:(){
-          
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Signup()),
+                              );
                             },
                           )
                         ],
