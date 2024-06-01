@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:login_signup/signup.dart';
@@ -38,8 +38,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  bool visibility = false;
-  bool isEnabled = false;
+  bool visibility = true;
+  bool isEnabled = true;
   bool isTapped = false;
 
   void _toggleButton() {
@@ -218,11 +218,25 @@ class _MyHomePageState extends State<MyHomePage> {
                             style: TextButton.styleFrom(
                               foregroundColor: Colors.blueAccent
                             ),
-                            onPressed:(){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Signup()),
+                            onPressed:() {
+                              Navigator.push( // This method is used to navigate to a new route (screen). It takes the current BuildContext and a Route object.
+                                  context,
+                                  PageRouteBuilder(
+                                    transitionDuration: Duration(seconds: 1),
+                                    pageBuilder: (context, animation,
+                                        secondaryAnimation) => Signup(),
+                                    transitionsBuilder: (context, animation,
+                                        secondaryAnimation, child) {
+                                      return FadeThroughTransition(
+                                          animation: animation,
+                                          secondaryAnimation: secondaryAnimation,
+                                          child: child,
+                                 );
+                                },
+                               ),
                               );
                             },
-                          )
+                          ),
                         ],
                       )
                     ],
