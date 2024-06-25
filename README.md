@@ -1,6 +1,6 @@
 # login_signup
 
-A new Flutter project.
+A new Flutter project focused on Front-End.
 
 ## Design: 
 [Login-Screens](https://www.figma.com/design/3NjrrUJtT8Sl5nDQHI2Ek3/Login-Screens-(Community)?node-id=1-1358&t=G0oPnTbjwbJmmqyh-0)
