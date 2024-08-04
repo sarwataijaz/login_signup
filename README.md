@@ -1,16 +1,11 @@
 # login_signup
 
-A new Flutter project.
+A new Flutter project focused on Front-End.
 
-## Getting Started
+## Design: 
+[Login-Screens](https://www.figma.com/design/3NjrrUJtT8Sl5nDQHI2Ek3/Login-Screens-(Community)?node-id=1-1358&t=G0oPnTbjwbJmmqyh-0)
 
-This project is a starting point for a Flutter application.
+https://github.com/sarwataijaz/login_signup/assets/124436066/976eea5b-d048-4653-966a-f8439960561a
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
